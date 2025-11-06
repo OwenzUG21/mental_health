@@ -1,0 +1,91 @@
+.mes{
+    display: flex;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.mass , .mespic{
+    width: 50%;
+}
+.mass{
+    padding: 50px;
+}
+
+/* .mespic{
+    height: 00px;
+   
+} */
+.p2{
+    height: 400px;
+}
+.pp{
+ border-radius: 20px;
+}
+.message{
+    padding: 20px;
+    margin-top: 20px;
+    background: #f0f3f9;
+}
+
+.hero{
+    background-image: url(medium-shot-woman-training-home.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    
+}
+
+.km{
+    margin-top: 400px;
+    /* background-color: #007138; */
+    background:linear-gradient(180deg, #90caf9, #e3f2fd);
+    padding: 20px;
+    color: #0d47a1;
+    border-radius: 30px;
+}
+
+.footer-bottom{
+background:linear-gradient(180deg, #90caf9, #e3f2fd);
+color: #0d47a1;
+}
+
+.mar{
+    display: flex;
+    flex-direction: row;
+    background-color:  #0d47a1;
+}
+
+.hr3{
+   background:linear-gradient(180deg, #90caf9, #e3f2fd);
+    color: #0d47a1;
+    padding: 10px;
+    padding-right: 15px;
+    display: inline-block;
+    width: 200px;
+  
+    /* height: 100px; */
+}
+.mrr{
+    padding: 30px;
+}
+
+.mmm p{
+    /* height: 40px; */
+    text-align: center;
+    padding: 8px;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+}
+
+.modal1-content1 {
+    background-color: white;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: modalopen 0.5s;
+}
