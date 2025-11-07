@@ -40,7 +40,7 @@
         </section>
        
 
-        <section id="message">
+        {{-- <section id="message">
             
             <div class="mes">
                 <div class="mass">
@@ -57,11 +57,7 @@
                     <br>
                     <br>
                     <br>
-                    {{-- <a class="km" id="kt" href="">Write a Testimony</a> --}}
                    
-                        {{-- <a class="km" id="mmm" href="">Write a Testimony</a> --}}
-                   
-
                 </div> 
      
                 <div class="mespic">
@@ -73,7 +69,7 @@
           
             
 
-        </section>
+        </section> --}}
 {{-- 
         <section class="kt bg" id="nj">
         <div class="hj">
@@ -103,7 +99,7 @@
     </section> --}} 
     
 
-        <section class="courts">
+        {{-- <section class="courts">
             @foreach ($tests as $test)
                 <div class="jk">
 
@@ -119,7 +115,7 @@
 
            
             
-        </section>
+        </section> --}}
 
  <style>
         * {
@@ -445,7 +441,8 @@
                     Thank you for sharing your story! Your testimony has been submitted successfully.
                 </div>
 
-                <form id="testimonyForm" method="POST">
+                <form action="/tes" id="testimonyForm" method="POST">
+                    @csrf
                     <div class="form-row">
                         <div class="form-group">
                             <label for="yourName">
@@ -454,7 +451,7 @@
                             <input 
                                 type="text" 
                                 id="yourName" 
-                                name="yourName"
+                                name="name"
                                 placeholder="Anonymous"
                             >
                         </div>
@@ -466,7 +463,7 @@
                             <input 
                                 type="email" 
                                 id="yourEmail" 
-                                name="yourEmail"
+                                name="email"
                                 placeholder="you@example.com"
                             >
                         </div>
@@ -476,7 +473,7 @@
                         <label for="yourStory">Your Story</label>
                         <textarea 
                             id="yourStory" 
-                            name="yourStory"
+                            name="test"
                             placeholder="Share your journey with us..."
                             required
                         ></textarea>
@@ -529,7 +526,7 @@
          </section>
 
         <!-- Stories Header -->
-        <div class="stories-header">
+        {{-- <div class="stories-header">
             <h2>Community Stories</h2>
             <div class="sort-container">
                 <label for="sortSelect">Sort by:</label>
@@ -539,12 +536,123 @@
                     <option value="name">Name (A-Z)</option>
                 </select>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Testimonies Grid -->
         <div class="testimonies-grid" id="testimoniesGrid">
             <!-- Testimonies will be loaded here -->
         </div>
+
+        <style>
+.testimonies-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+}
+
+.testimonies-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.testimonies-header h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.sort-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.testimonies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.testimony-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.testimony-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.testimony-name {
+    color: #333;
+}
+
+.testimony-date {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.testimony-text {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.4;
+}
+
+.no-testimonies {
+    text-align: center;
+    color: #666;
+}
+
+.pagination {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+</style>
+
+
+
+
+
+
+    <div class="testimonies-section ">
+    <div class="testimonies-header">
+        <h2>Community Testimonies</h2>
+
+        <div class="sort-bar">
+            <label for="sortSelect">Sort by:</label>
+            <select id="sortSelect" class="sort-select"  onchange="window.location='?sort='+this.value">
+                <option value="recent" {{ request('sort') == 'recent' ? 'selected' : '' }}>Most Recent</option>
+                <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest</option>
+                <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Name</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="testimonies-grid">
+        @forelse ($tests as $test)
+            <div class="testimony-card">
+                <div class="testimony-header">
+                    <div class="testimony-name">{{ $test->name ?? 'Anonymous' }}</div>
+                    <div class="testimony-date">{{ $test->created_at->format('F d, Y \a\t h:i A') }}</div>
+                </div>
+                <div class="testimony-text">{{ $test->test }}</div>
+            </div>
+        @empty
+            <p class="no-testimonies">No testimonies yet. Be the first to share your story!</p>
+        @endforelse
+    </div>
+
+    @if ($tests->hasPages())
+        <div class="pagination">
+            {{ $tests->links() }}
+        </div>
+    @endif
+</div>
+
 
         <!-- Load More Button -->
         <div class="load-more-container">
@@ -552,10 +660,15 @@
         </div>
     </div>
 
-    <script>
+
+
+
+    {{-- <script>
+
+        
         const testimonies = [
             {
-                name: "Alex P.",
+                name: "{{$test->name}}",
                 date: "April 15, 2025 at 8:30 AM",
                 text: '"Finding Serenity Space was a turning point for me. The resources and community support helped me navigate my anxiety in a way I never thought possible. I\'m so grateful for this platform."',
                 timestamp: new Date('2025-04-15T08:30:00')
@@ -657,7 +770,7 @@
     </script>
 
 
-
+ --}}
 
   <script src="{{asset('js/main.js')}}"></script>
 

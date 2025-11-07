@@ -33,6 +33,7 @@
                         <button onclick="showSection('testimonials', this)" class="active sidebar-btn py-2 px-3 rounded-lg text-left hover:bg-blue-200 font-medium transition">Testimonials</button>
                         <button onclick="showSection('messages', this)" class="sidebar-btn py-2 px-3 rounded-lg text-left hover:bg-blue-200 font-medium transition">Messages</button>
                         <button onclick="showSection('settings', this)" class="sidebar-btn py-2 px-3 rounded-lg text-left hover:bg-blue-200 font-medium transition">Settings</button>
+                        <a href="{{url('/')}}" class="sidebar-btn py-2 px-3 rounded-lg text-left hover:bg-blue-200 font-medium transition">Home</a>
                         <button class="bg-red-500 text-white mt-auto rounded-lg py-2 px-3 font-semibold hover:bg-red-600">Logout</button>
                     </nav>
                 </div>
@@ -56,20 +57,68 @@
                                         <th class="px-4 py-2">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-gray-700">
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">1</td>
-                                        <td class="px-4 py-2">Jane Doe</td>
-                                        <td class="px-4 py-2">This platform helped me manage my anxiety better!</td>
-                                        <td class="px-4 py-2">⭐⭐⭐⭐⭐</td>
-                                        <td class="px-4 py-2"><span class="bg-green-200 text-green-800 px-2 py-1 rounded-md text-sm font-medium">Approved</span></td>
-                                        <td class="px-4 py-2">2025-10-10</td>
-                                        <td class="px-4 py-2 space-x-2">
-                                            <button class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Edit</button>
-                                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">Delete</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                              <tbody class="text-gray-700">
+    @foreach ($tests as $index => $test)
+        <tr class="border-t">
+            <td class="px-4 py-2">{{ $index + 1 }}</td>
+            <td class="px-4 py-2">{{ $test->name ?? 'Anonymous' }}</td>
+            <td class="px-4 py-2">{{ Str::limit($test->test, 80) }}</td>
+            <td class="px-4 py-2">⭐⭐⭐⭐⭐</td>
+            <td class="px-4 py-2">
+                <span class="bg-green-200 text-green-800 px-2 py-1 rounded-md text-sm font-medium">
+                    Approved
+                </span>
+            </td>
+            <td class="px-4 py-2">{{ $test->created_at->format('Y-m-d') }}</td>
+            {{-- <td class="px-4 py-2 space-x-2">
+                <button 
+                    class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md text-sm"
+                    onclick="openEditModal({{ $test->id }}, '{{ addslashes($test->name) }}', '{{ addslashes($test->email) }}', '{{ addslashes($test->test) }}')"
+                >
+                    Edit
+                </button>
+
+                <form action="/del/{{ $test->id }}" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button 
+                        type="submit"
+                        onclick="return confirm('Are you sure you want to delete this testimony?')"
+                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm"
+                    >
+                        Delete
+                    </button>
+                </form>
+            </td> --}}
+
+            <td class="px-4 py-2">
+    <div class="flex items-center gap-3">
+        {{-- <button 
+            class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md text-sm shadow-sm"
+            onclick="openEditModal({{ $test->id }}, '{{ addslashes($test->name) }}', '{{ addslashes($test->email) }}', '{{ addslashes($test->test) }}')"
+        >
+            Edit
+        </button> --}}
+        <a href="/edit/{{$test->id}}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md text-sm shadow-sm">EDIT</a>
+
+        <form action="/del/{{ $test->id }}" method="POST" class="inline">
+            @csrf
+            @method('DELETE')
+            <button 
+                type="submit"
+                onclick="return confirm('Are you sure you want to delete this testimony?')"
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm shadow-sm"
+            >
+                Delete
+            </button>
+        </form>
+    </div>
+</td>
+
+        </tr>
+    @endforeach
+</tbody>
+
                             </table>
                         </div>
                     </div>
@@ -91,27 +140,55 @@
                                         <th class="px-4 py-2">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-gray-700">
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">1</td>
-                                        <td class="px-4 py-2">John Smith</td>
-                                        <td class="px-4 py-2">john@example.com</td>
-                                        <td class="px-4 py-2">Therapy Inquiry</td>
-                                        <td class="px-4 py-2">I’d love to know more about therapy sessions.</td>
-                                        <td class="px-4 py-2"><span class="bg-gray-300 text-gray-800 px-2 py-1 rounded-md text-sm">Unread</span></td>
-                                        <td class="px-4 py-2">2025-10-20</td>
-                                        <td class="px-4 py-2 space-x-2">
-                                            <button class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Mark Read</button>
-                                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">Delete</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                               <tbody class="text-gray-700">
+    @forelse ($messages as $index => $msg)
+        <tr class="border-t">
+            <td class="px-4 py-2">{{ $index + 1 }}</td>
+            <td class="px-4 py-2">{{ $msg->name ?? 'Unknown' }}</td>
+            <td class="px-4 py-2">{{ $msg->email ?? 'N/A' }}</td>
+            <td class="px-4 py-2">{{ $msg->subject ?? 'No subject' }}</td>
+            <td class="px-4 py-2">{{ Str::limit($msg->message, 80) }}</td>
+
+            <td class="px-4 py-2">
+                @if ($msg->status === 'read')
+                    <span class="bg-green-200 text-green-800 px-2 py-1 rounded-md text-sm font-medium">Read</span>
+                @else
+                    <span class="bg-gray-300 text-gray-800 px-2 py-1 rounded-md text-sm font-medium">Unread</span>
+                @endif
+            </td>
+
+            <td class="px-4 py-2">{{ $msg->created_at->format('Y-m-d') }}</td>
+            <td class="px-4 py-2 space-x-2">
+                {{-- <form action="{{ route('admin.messages.markRead', $msg->id) }}" method="POST" class="inline">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">
+                        {{ $msg->status === 'read' ? 'Mark Unread' : 'Mark Read' }}
+                    </button>
+                </form> --}}
+
+                <form action="/delz/{{$msg->id}}" method="POST" class="inline" onsubmit="return confirm('Delete this message?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="8" class="text-center py-4 text-gray-500">No messages found.</td>
+        </tr>
+    @endforelse
+</tbody>
+
                             </table>
                         </div>
                     </div>
 
                     {{-- Settings Section --}}
-                    <div id="settings" class="fade-section hidden">
+                    {{-- <div id="settings" class="fade-section hidden">
                         <h3 class="text-2xl font-bold text-blue-800 mb-4">Settings</h3>
                         <form class="space-y-4">
                             <div class="text-center">
@@ -150,7 +227,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- JS --}}
     <script>

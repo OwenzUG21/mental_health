@@ -193,6 +193,9 @@
         </thead>
         <tbody>
           <tr>
+            @foreach ( as )
+              
+            @endforeach
             <td>1</td>
             <td>Jane Doe</td>
             <td>This platform helped me manage my anxiety better!</td>

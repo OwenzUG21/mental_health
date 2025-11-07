@@ -11,12 +11,19 @@ use Illuminate\Support\Facades\Notification;
 
 
 class ContactController extends Controller
-{
+{    
+    
+    public function delz(Contact $messages){
+        $messages->delete();
+        return redirect('/dashboard');
+
+    }
 
         public function cont(Request $request){
             $incoming= $request->validate([
                 'name'=>'required',
                 'email'=>'required',
+                'subject'=>'required',
                 'message'=>'required',
 
             ]);

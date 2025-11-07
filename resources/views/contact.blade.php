@@ -428,15 +428,16 @@
                 <div class="success-message" id="successMessage">
                     Thank you for reaching out! We've received your message and will respond within 24-48 hours.
                 </div>
-
-                <form id="contactForm" onsubmit="handleSubmit(event)">
+{{-- onsubmit="handleSubmit(event) --}}
+                <form action="/cont" id="contactForm" method="POST">
+                    @csrf
                     <div class="form-row">
                         <div class="form-group">
                             <label for="yourName">Your Name</label>
                             <input 
                                 type="text" 
                                 id="yourName" 
-                                name="yourName"
+                                name="name"
                                 placeholder="Enter your full name"
                                 required
                             >
@@ -447,7 +448,7 @@
                             <input 
                                 type="email" 
                                 id="yourEmail" 
-                                name="yourEmail"
+                                name="email"
                                 placeholder="Enter your email address"
                                 required
                             >
