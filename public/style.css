@@ -530,6 +530,20 @@ color: #0d47a1;
     color: #333;
 }
 
+.clos {
+    position: absolute;
+    top: 15px;
+    /* right: 5px; */
+    margin-left: 45%;
+    font-size: 2.5rem;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.clos:hover {
+    color: #333;
+}
+
 .modal h2 {
     margin-bottom: 20px;
     text-align: center;

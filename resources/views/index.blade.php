@@ -74,25 +74,9 @@
                 </div>
 
             </div>
-          
             
-
         </section>
 
-        <section class="courts">
-
-            <div>
-                <div>
-
-                </div>
-            </div>
-
-            <div>
-                <div>
-
-                </div>
-            </div>
-        </section>
 
         <section id="features" class="features">
             <div class="container">
